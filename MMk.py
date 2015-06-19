@@ -1,4 +1,5 @@
 """Demo model of SimpleKit usage."""
+
 from simplekit import SimpleKit
 import numpy
 import math
