@@ -31,7 +31,6 @@ class SimpleKit:
     @abc.abstractmethod
     def init(self):
         """This abstract method must be overridden in your model class."""
-        return
 
     def run(self):
         """Execute the model logic."""
