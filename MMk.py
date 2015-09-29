@@ -1,5 +1,4 @@
 """Demo model of SimpleKit usage."""
-
 from simplekit import SimpleKit
 import numpy
 import math
@@ -55,7 +54,6 @@ class MMk(SimpleKit):
         print "Model Time:", self.model_time, "\tEvent:\t", event, \
               "\tQueue Length: ", self.qLength, "\t# Available Servers: ", \
               self.numAvailableServers
-        return
 
 if __name__ == '__main__':
     numpy.random.seed(12345)    # Same seed => identical results to Ruby/Java!
