@@ -9,8 +9,8 @@ class MMk(SimpleKit):
     def __init__(self, arrivalRate, serviceRate, maxServers):
         """Construct an instance of the M/M/k."""
         SimpleKit.__init__(self)
-        self.arrivalRate = arrivalRate
-        self.serviceRate = serviceRate
+        self.meanArrival = 1.0 / arrivalRate
+        self.meanSvc = 1.0 / serviceRate
         self.maxServers = maxServers
         self.qLength = 0
         self.numAvailableServers = 0
@@ -26,7 +26,7 @@ class MMk(SimpleKit):
     def arrival(self):
         """Increment queue, schedule next arrival, beginService if possible."""
         self.qLength += 1
-        self.schedule(self.arrival, self.exponential(self.arrivalRate))
+        self.schedule(self.arrival, numpy.random.exponential(self.meanArrival))
         if self.numAvailableServers > 0:
             self.schedule(self.beginService, 0.0)
         self.dumpState("Arrival")
@@ -35,7 +35,7 @@ class MMk(SimpleKit):
         """Remove customer from line, allocate server, schedule endService."""
         self.qLength -= 1
         self.numAvailableServers -= 1
-        self.schedule(self.endService, self.exponential(self.serviceRate))
+        self.schedule(self.endService, numpy.random.exponential(self.meanSvc))
         self.dumpState("beginService")
 
     def endService(self):
@@ -45,16 +45,11 @@ class MMk(SimpleKit):
             self.schedule(self.beginService, 0.0)
         self.dumpState("endService")
 
-    def exponential(self, rate):
-        """Generate an exponential RV with specified rate using inversion."""
-        return -math.log(numpy.random.random()) / rate
-
     def dumpState(self, event):
         """Dump of the current state of the model."""
-        print "Model Time:", self.model_time, "\tEvent:\t", event, \
-              "\tQueue Length: ", self.qLength, "\t# Available Servers: ", \
+        print "Time: %6.2f" % self.model_time, "  Event: %-12s" % event, \
+              "  Queue Length: %3d" % self.qLength, " Available Servers: ", \
               self.numAvailableServers
 
 if __name__ == '__main__':
-    numpy.random.seed(12345)    # Same seed => identical results to Ruby/Java!
     MMk(4.5, 1.0, 5).run()      # Instantiate and run a copy of the MMk model.
