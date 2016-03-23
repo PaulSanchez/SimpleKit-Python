@@ -1,6 +1,6 @@
 """A discrete event modeling toolkit based on event graphs."""
 
-from Queue import PriorityQueue
+from queue import PriorityQueue
 import abc
 
 __author__ = 'Hayley Oliver and Paul J Sanchez'
