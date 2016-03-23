@@ -51,9 +51,9 @@ class MMk(SimpleKit):
 
     def dumpState(self, event):
         """Dump of the current state of the model."""
-        print "Model Time:", self.model_time, "\tEvent:\t", event, \
+        print("Model Time:", self.model_time, "\tEvent:\t", event, \
               "\tQueue Length: ", self.qLength, "\t# Available Servers: ", \
-              self.numAvailableServers
+              self.numAvailableServers)
 
 if __name__ == '__main__':
     numpy.random.seed(12345)    # Same seed => identical results to Ruby/Java!
