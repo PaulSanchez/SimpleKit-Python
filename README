@@ -1,3 +1,5 @@
 This is a Python implementation of simplekit. Simplekit is intended as a
 pedagogical teaching tool for discrete event modeling, based on Schruben's
 Event Graphs.
+
+Simplekit requires 'numpy'.
