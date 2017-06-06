@@ -47,9 +47,10 @@ class MMk(SimpleKit):
 
     def dumpState(self, event):
         """Dump of the current state of the model."""
-        print("Time: %6.2f" % self.model_time, "  Event: %-12s" % event, \
-              "  Queue Length: %3d" % self.qLength, " Available Servers: ", \
+        print("Time: %6.2f" % self.model_time, "  Event: %-12s" % event,
+              "  Queue Length: %3d" % self.qLength, " Available Servers: ",
               self.numAvailableServers)
 
 if __name__ == '__main__':
+    numpy.random.seed(12345)
     MMk(4.5, 1.0, 5).run()      # Instantiate and run a copy of the MMk model.
