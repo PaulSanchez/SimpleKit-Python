@@ -38,9 +38,9 @@ class SimpleKit:
         while not self.event_list.empty():
             event_notice = self.event_list.get_nowait()
             self.model_time = event_notice[0]
-            event_notice[2](*event_notice[3:])
+            event_notice[2](*(event_notice[3]))
 
-    def schedule(self, event, delay, priority = 10, *args):
+    def schedule(self, event, delay, *args, priority = 10):
         """Add an event to the pending events.
 
         Args:
@@ -50,8 +50,7 @@ class SimpleKit:
         """
         if delay < 0:
             raise RuntimeError('Negative delay is not allowed.')
-        # event_notice = [delay + self.model_time, event] + list(args)
-        event_notice = (delay + self.model_time, priority, event, *args)
+        event_notice = [delay + self.model_time, priority, event, args]
         self.event_list.put_nowait(event_notice)
 
     def halt(self):
