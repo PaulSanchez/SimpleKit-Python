@@ -50,7 +50,7 @@ class SimpleKit:
         """
         if delay < 0:
             raise RuntimeError('Negative delay is not allowed.')
-        event_notice = [delay + self.model_time, priority, event, args]
+        event_notice = (delay + self.model_time, priority, event, args)
         self.event_list.put_nowait(event_notice)
 
     def halt(self):
