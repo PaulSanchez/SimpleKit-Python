@@ -20,7 +20,7 @@ class MMk(SimpleKit):
         self.numAvailableServers = self.maxServers
         self.qLength = 0
         self.schedule(self.arrival, 0.0)
-        self.schedule(self.halt, 100.0)
+        self.schedule(self.halt, 100.0, priority = 0)
         self.dumpState("Init")
 
     def arrival(self):
@@ -28,7 +28,7 @@ class MMk(SimpleKit):
         self.qLength += 1
         self.schedule(self.arrival, numpy.random.exponential(self.meanArrival))
         if self.numAvailableServers > 0:
-            self.schedule(self.beginService, 0.0)
+            self.schedule(self.beginService, 0.0, priority = 2)
         self.dumpState("Arrival")
 
     def beginService(self):
@@ -42,7 +42,7 @@ class MMk(SimpleKit):
         """Free server, if customers are waiting initiate another service."""
         self.numAvailableServers += 1
         if self.qLength > 0:
-            self.schedule(self.beginService, 0.0)
+            self.schedule(self.beginService, 0.0, priority = 1)
         self.dumpState("endService")
 
     def dumpState(self, event):
