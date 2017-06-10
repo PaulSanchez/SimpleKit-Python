@@ -25,7 +25,9 @@ class SimpleKit:
     __metaclass__ = abc.ABCMeta
 
     def __init__(self):
-        """Initialize a pending events list and set model_time to 0."""
+        """
+        Initialize a pending events list and set model_time to 0.
+        """
         self.event_list = PriorityQueue()
         self.model_time = 0.0
 
@@ -42,7 +44,8 @@ class SimpleKit:
             event_notice.event(*(event_notice.args))
 
     def schedule(self, event, delay, *args, priority=10):
-        """Add an event to the pending events.
+        """
+        Add an event to the pending events.
 
         Args:
             event: The name of the event method to be scheduled.
@@ -55,12 +58,16 @@ class SimpleKit:
             self.EventNotice(event, delay + self.model_time, args, priority))
 
     def halt(self):
-        """Terminate a simulation run by clearing the pending events list."""
+        """
+        Terminate a simulation run by clearing the pending events list.
+        """
         while not self.event_list.empty():
             self.event_list.get_nowait()
 
     class EventNotice:
-        """Internal class for storage & retrieval of event notice info."""
+        """
+        Internal class for storage & retrieval of event notice info.
+        """
 
         def __init__(self, event, time, args, priority=10):
             self.event = event
