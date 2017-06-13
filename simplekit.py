@@ -6,8 +6,8 @@ import abc
 __author__ = 'Hayley Oliver and Paul J Sanchez'
 __copyright__ = 'Copyright 2015-2017, The SEED Center'
 __credits__ = ['Hayley Oliver', 'Paul J Sanchez']
-__license__ = 'GPL'
-__version__ = '1.0.0'
+__license__ = 'MIT'
+__version__ = '2.0.0'
 __maintainer__ = 'Paul J Sanchez'
 __email__ = 'pjs@alum.mit.edu'
 __status__ = 'Development'
