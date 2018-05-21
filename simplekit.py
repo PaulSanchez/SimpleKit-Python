@@ -63,7 +63,21 @@ class SimpleKit:
             self.EventNotice(event, self.model_time, delay, args, priority))
 
     def cancel_next(self, event):
+        """Cancel the next occurrence of the specified event"""
         self.__cancel_next_event_set.add(event)
+
+    def cancel_all(self, event):
+        """
+        Cancel all currently scheduled occurrences of the specified event.
+        WARNING - copies entire event list excluding the targeted event,
+        so this can get expensive if done indiscriminately.
+        """
+        new_pq = PriorityQueue()
+        while not self.event_list.empty():
+            event_notice = self.event_list.get_nowait()
+            if not event_notice.event == event:
+                new_pq.put_nowait(event_notice)
+        self.event_list = new_pq
 
     def halt(self):
         """
