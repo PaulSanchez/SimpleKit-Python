@@ -60,7 +60,7 @@ class SimpleKit:
         if delay < 0:
             raise RuntimeError('Negative delay is not allowed.')
         self.event_list.put_nowait(
-            self.EventNotice(event, delay + self.model_time, args, priority))
+            self.EventNotice(event, self.model_time, delay, args, priority))
 
     def cancel_next(self, event):
         self.__cancel_next_event_set.add(event)
@@ -77,9 +77,9 @@ class SimpleKit:
         Internal class for storage & retrieval of event notice info.
         """
 
-        def __init__(self, event, time, args, priority=10):
+        def __init__(self, event, current_time, delay, args, priority=10):
             self.event = event
-            self.time = time
+            self.time = current_time + delay
             self.priority = priority
             self.args = args
 
