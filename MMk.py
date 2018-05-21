@@ -20,8 +20,15 @@ class MMk(SimpleKit):
         self.numAvailableServers = self.maxServers
         self.qLength = 0
         self.schedule(self.arrival, 0.0)
+        self.schedule(self.arrival, 80.0)
         self.schedule(self.shutdown, 100.0, priority = 0)
+        self.schedule(self.restart, 105.0)
+        self.schedule(self.shutdown, 130.0, priority = 0)
         self.dumpState("Init")
+
+    def restart(self):
+        self.schedule(self.arrival, 0.0)
+        self.dumpState("restart")
 
     def arrival(self):
         """Increment queue, schedule next arrival, beginService if possible."""
@@ -47,7 +54,11 @@ class MMk(SimpleKit):
 
     def shutdown(self):
         """Close shop by shutting doors, i.e., no more arrivals."""
-        self.cancel_next(self.arrival)
+        if self.model_time < 110.0:
+            self.cancel_all(self.arrival)
+        else:
+            self.cancel_next(self.arrival)
+        self.dumpState("shutdown")
 
     def dumpState(self, event):
         """Dump of the current state of the model."""
