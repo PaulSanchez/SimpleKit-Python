@@ -30,6 +30,7 @@ class SimpleKit:
         """
         self.event_list = PriorityQueue()
         self.model_time = 0.0
+        self.__cancel_next_event_set = set()
 
     @abc.abstractmethod
     def init(self):
@@ -40,6 +41,10 @@ class SimpleKit:
         self.init()
         while not self.event_list.empty():
             event_notice = self.event_list.get_nowait()
+            if len(self.__cancel_next_event_set) > 0:
+                if event_notice.event in self.__cancel_next_event_set:
+                    self.__cancel_next_event_set.remove(event_notice.event)
+                    continue
             self.model_time = event_notice.time
             event_notice.event(*(event_notice.args))
 
@@ -56,6 +61,9 @@ class SimpleKit:
             raise RuntimeError('Negative delay is not allowed.')
         self.event_list.put_nowait(
             self.EventNotice(event, delay + self.model_time, args, priority))
+
+    def cancel_next(self, event):
+        self.__cancel_next_event_set.add(event)
 
     def halt(self):
         """
