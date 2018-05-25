@@ -4,7 +4,7 @@ from queue import PriorityQueue
 import abc
 
 __author__ = 'Hayley Oliver and Paul J Sanchez'
-__copyright__ = 'Copyright 2015-2017, The SEED Center'
+__copyright__ = 'Copyright 2015-2018, The SEED Center'
 __credits__ = ['Hayley Oliver', 'Paul J Sanchez']
 __license__ = 'MIT'
 __version__ = '2.0.0'
@@ -28,24 +28,28 @@ class SimpleKit:
         """
         Initialize a pending events list and set model_time to 0.
         """
-        self.event_list = PriorityQueue()
-        self.model_time = 0.0
+        self.__event_list = PriorityQueue()
+        self.__model_time = 0.0
         self.__cancel_next_event_set = set()
 
     @abc.abstractmethod
     def init(self):
         """This abstract method must be overridden in your model class."""
 
+    @property
+    def model_time(self):
+        return self.__model_time
+
     def run(self):
         """Execute the model logic."""
         self.init()
-        while not self.event_list.empty():
-            event_notice = self.event_list.get_nowait()
+        while not self.__event_list.empty():
+            event_notice = self.__event_list.get_nowait()
             if len(self.__cancel_next_event_set) > 0:
                 if event_notice.event in self.__cancel_next_event_set:
                     self.__cancel_next_event_set.remove(event_notice.event)
                     continue
-            self.model_time = event_notice.time
+            self.__model_time = event_notice.time
             event_notice.event(*(event_notice.args))
 
     def schedule(self, event, delay, *args, priority=10):
@@ -59,8 +63,8 @@ class SimpleKit:
         """
         if delay < 0:
             raise RuntimeError('Negative delay is not allowed.')
-        self.event_list.put_nowait(
-            self.EventNotice(event, self.model_time, delay, args, priority))
+        self.__event_list.put_nowait(
+            self.__EventNotice(event, self.__model_time, delay, args, priority))
 
     def cancel_next(self, event):
         """Cancel the next occurrence of the specified event"""
@@ -73,20 +77,20 @@ class SimpleKit:
         so this can get expensive if done indiscriminately.
         """
         new_pq = PriorityQueue()
-        while not self.event_list.empty():
-            event_notice = self.event_list.get_nowait()
+        while not self.__event_list.empty():
+            event_notice = self.__event_list.get_nowait()
             if not event_notice.event == event:
                 new_pq.put_nowait(event_notice)
-        self.event_list = new_pq
+        self.__event_list = new_pq
 
     def halt(self):
         """
         Terminate a simulation run by clearing the pending events list.
         """
-        while not self.event_list.empty():
-            self.event_list.get_nowait()
+        while not self.__event_list.empty():
+            self.__event_list.get_nowait()
 
-    class EventNotice:
+    class __EventNotice:
         """
         Internal class for storage & retrieval of event notice info.
         """
