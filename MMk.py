@@ -2,6 +2,7 @@
 from simplekit import SimpleKit
 import numpy
 import math
+import sys
 
 class MMk(SimpleKit):
     """Implementation of an M/M/k queueing model using SimpleKit."""
@@ -68,4 +69,5 @@ class MMk(SimpleKit):
 
 if __name__ == '__main__':
     numpy.random.seed(12345)
-    MMk(4.5, 1.0, 5).run()      # Instantiate and run a copy of the MMk model.
+    # Recommend running with 4.5, 1.0, 5
+    MMk(float(sys.argv[1]), float(sys.argv[2]), int(sys.argv[3])).run()      # Instantiate and run a copy of the MMk model.
