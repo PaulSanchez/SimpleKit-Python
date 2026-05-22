@@ -1,16 +1,15 @@
 """A discrete event modeling toolkit based on event graphs."""
 
-from queue import PriorityQueue
 import abc
+from queue import PriorityQueue
 
-__author__ = 'Hayley Oliver and Paul J Sanchez'
-__copyright__ = 'Copyright 2015-2018, The SEED Center'
-__credits__ = ['Hayley Oliver', 'Paul J Sanchez']
-__license__ = 'MIT'
-__version__ = '3.2.0'
-__maintainer__ = 'Paul J Sanchez'
-__email__ = 'pjs@alum.mit.edu'
-__status__ = 'Development'
+__author__ = ["Hayley Oliver", "Paul J Sanchez"]
+__copyright__ = "Copyright 2015-2026, Hayley Oliver and Paul J Sanchez"
+__license__ = "MIT"
+__version__ = "3.2.1"
+__maintainer__ = "Paul J Sanchez"
+__email__ = "prof.paul.sanchez@gmail.com"
+__status__ = "Development"
 
 
 class SimpleKit:
@@ -22,6 +21,7 @@ class SimpleKit:
     Note:
         Your model cannot implement methods named run(), schedule(), or halt().
     """
+
     __metaclass__ = abc.ABCMeta
 
     def __init__(self):
@@ -62,9 +62,10 @@ class SimpleKit:
             args: (optional) Any arguments required by the event.
         """
         if delay < 0:
-            raise RuntimeError('Negative delay is not allowed.')
+            raise RuntimeError("Negative delay is not allowed.")
         self.__event_list.put_nowait(
-            self.__EventNotice(event, self.__model_time, delay, args, priority))
+            self.__EventNotice(event, self.__model_time, delay, args, priority)
+        )
 
     def cancel_next(self, event):
         """Cancel the next occurrence of the specified event"""
@@ -105,5 +106,6 @@ class SimpleKit:
             return self.time == other.time and self.priority == other.priority
 
         def __lt__(self, other):
-            return (self.time < other.time or
-                (self.time == other.time and self.priority < other.priority))
+            return self.time < other.time or (
+                self.time == other.time and self.priority < other.priority
+            )
