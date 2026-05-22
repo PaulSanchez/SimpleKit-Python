@@ -1,12 +1,8 @@
 This is a Python implementation of simplekit. Simplekit is intended as a
 pedagogical teaching tool for discrete event modeling, based on Schruben's
-Event Graphs.
+Event Graphs. See the SimulationBasics.pdf in `docs` for a quick introduction
+to discrete event modeling, an explanation of SimpleKit's architecture, and a
+working example of a queueing model. Additional examples can be found in the
+`demos` folder. API documentation can be generated using `pydoc`.
 
-See the SimulationBasics.pdf for a quick introduction to discrete
-event modeling, an explanation of SimpleKit's architecture, and a
-working example of queueing model.
-
-Simplekit requires `numpy`.
-
-The master branch has been updated to a Python 3.x implementation.
-Check out the `python2` branch if you need a Python 2.7.x implementation.
+We recommend using `numpy` for random variate generation.
