@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "simplekit"
+version = "3.2.1"
+authors = [
+  { name="Paul J Sanchez", email="prof.paul.sanchez@gmail.com" },
+]
+description = "A discrete event modeling toolkit based on event graphs"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/PaulSanchez/simplekit-python"
+
