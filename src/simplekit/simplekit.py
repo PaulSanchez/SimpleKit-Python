@@ -3,15 +3,6 @@
 import abc
 from queue import PriorityQueue
 
-__author__ = ["Hayley Oliver", "Paul J Sanchez"]
-__copyright__ = "Copyright 2015-2026, Hayley Oliver and Paul J Sanchez"
-__license__ = "MIT"
-__version__ = "3.2.1"
-__maintainer__ = "Paul J Sanchez"
-__email__ = "prof.paul.sanchez@gmail.com"
-__status__ = "Development"
-
-
 class SimpleKit:
     """
     To create a SimpleKit model:
@@ -109,3 +100,11 @@ class SimpleKit:
             return self.time < other.time or (
                 self.time == other.time and self.priority < other.priority
             )
+
+__author__ = ["Hayley Oliver", "Paul J Sanchez"]
+__copyright__ = "Copyright 2015-2026, Hayley Oliver and Paul J Sanchez"
+__license__ = "MIT"
+__version__ = "3.2.1"
+__maintainer__ = "Paul J Sanchez"
+__email__ = "prof.paul.sanchez@gmail.com"
+__status__ = "Development"
