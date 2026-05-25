@@ -3,12 +3,12 @@ requires = ["hatchling >= 1.26"]
 build-backend = "hatchling.build"
 
 [project]
-name = "simplekit"
-version = "3.3.0"
+name = "event_graph_sim"
+version = "3.4.0"
 authors = [
   { name="Paul J Sanchez", email="prof.paul.sanchez@gmail.com" },
 ]
-description = "A discrete event modeling toolkit based on event graphs"
+description = "A discrete event simulation modeling engine based on event graphs"
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [

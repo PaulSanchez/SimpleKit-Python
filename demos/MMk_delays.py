@@ -1,13 +1,19 @@
 """Demo model of SimpleKit usage."""
-from simplekit import SimpleKit
-from collections import deque
-from numpy.random import default_rng
+
 import sys
+from collections import deque
+
+from numpy.random import default_rng
+
+from event_graph_sim import SimpleKit
+
 
 class MMk(SimpleKit):
     """Implementation of an M/M/k queueing model using SimpleKit."""
 
-    def __init__(self, arrivalRate, serviceRate, maxServers, numCustomers, seed = 1234567):
+    def __init__(
+        self, arrivalRate, serviceRate, maxServers, numCustomers, seed=1234567
+    ):
         """Construct an instance of the M/M/k."""
         SimpleKit.__init__(self)
         self.mean_interarrival_timeTime = 1.0 / arrivalRate
@@ -22,7 +28,9 @@ class MMk(SimpleKit):
         self.numAvailableServers = self.maxServers
         self.customer_number = 0
         self.queue.clear()
-        self.schedule(self.arrival, self.rng.exponential(self.mean_interarrival_timeTime))
+        self.schedule(
+            self.arrival, self.rng.exponential(self.mean_interarrival_timeTime)
+        )
         print("customer#,delay_in_queue")
 
     def arrival(self):
@@ -30,9 +38,11 @@ class MMk(SimpleKit):
         self.customer_number += 1
         self.queue.append((self.customer_number, self.model_time))
         if self.customer_number < self.numCustomers:
-            self.schedule(self.arrival, self.rng.exponential(self.mean_interarrival_timeTime))
+            self.schedule(
+                self.arrival, self.rng.exponential(self.mean_interarrival_timeTime)
+            )
         if self.numAvailableServers > 0:
-            self.schedule(self.beginService, 0.0, priority = 2)
+            self.schedule(self.beginService, 0.0, priority=2)
 
     def beginService(self):
         """Remove customer from line, allocate server, schedule endService."""
@@ -45,19 +55,21 @@ class MMk(SimpleKit):
         """Free server, if customers are waiting initiate another service."""
         self.numAvailableServers += 1
         if len(self.queue) > 0:
-            self.schedule(self.beginService, 0.0, priority = 1)
+            self.schedule(self.beginService, 0.0, priority=1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Instantiate and run a copy of the MMk model.
     if len(sys.argv) == 1:
         MMk(4.5, 1.0, 5, 100).run()
     elif len(sys.argv) == 5:
-        MMk(float(sys.argv[1]), float(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4])).run()
+        MMk(
+            float(sys.argv[1]), float(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4])
+        ).run()
     else:
         m1 = "Please specify arrival rate, per-server service rate, # servers,"
         m2 = "and # customers separated by spaces on the command-line."
         m3 = "If no arguments are given, these default to: 4.5 1.0 5 100"
-        print("\n\t" + m1, file = sys.stderr)
-        print("\t" + m2, file = sys.stderr)
-        print("\n\t" + m3 + "\n", file = sys.stderr)
+        print("\n\t" + m1, file=sys.stderr)
+        print("\t" + m2, file=sys.stderr)
+        print("\n\t" + m3 + "\n", file=sys.stderr)

@@ -1,8 +1,12 @@
 """Demo model of SimpleKit usage."""
-from simplekit import SimpleKit
-import numpy
+
 import math
 import sys
+
+import numpy
+
+from event_graph_sim import SimpleKit
+
 
 class MMk(SimpleKit):
     """Implementation of an M/M/k queueing model using SimpleKit."""
@@ -22,9 +26,9 @@ class MMk(SimpleKit):
         self.qLength = 0
         self.schedule(self.arrival, 0.0)
         self.schedule(self.arrival, 80.0)
-        self.schedule(self.shutdown, 100.0, priority = 0)
+        self.schedule(self.shutdown, 100.0, priority=0)
         self.schedule(self.restart, 105.0)
-        self.schedule(self.shutdown, 130.0, priority = 0)
+        self.schedule(self.shutdown, 130.0, priority=0)
         self.dumpState("Init")
 
     def restart(self):
@@ -36,7 +40,7 @@ class MMk(SimpleKit):
         self.qLength += 1
         self.schedule(self.arrival, numpy.random.exponential(self.meanArrival))
         if self.numAvailableServers > 0:
-            self.schedule(self.beginService, 0.0, priority = 2)
+            self.schedule(self.beginService, 0.0, priority=2)
         self.dumpState("Arrival")
 
     def beginService(self):
@@ -50,7 +54,7 @@ class MMk(SimpleKit):
         """Free server, if customers are waiting initiate another service."""
         self.numAvailableServers += 1
         if self.qLength > 0:
-            self.schedule(self.beginService, 0.0, priority = 1)
+            self.schedule(self.beginService, 0.0, priority=1)
         self.dumpState("endService")
 
     def shutdown(self):
@@ -63,11 +67,18 @@ class MMk(SimpleKit):
 
     def dumpState(self, event):
         """Dump of the current state of the model."""
-        print("Time: %6.2f" % self.model_time, "  Event: %-12s" % event,
-              "  Queue Length: %3d" % self.qLength, " Available Servers: ",
-              self.numAvailableServers)
+        print(
+            "Time: %6.2f" % self.model_time,
+            "  Event: %-12s" % event,
+            "  Queue Length: %3d" % self.qLength,
+            " Available Servers: ",
+            self.numAvailableServers,
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     numpy.random.seed(12345)
     # Recommend running with 4.5, 1.0, 5
-    MMk(float(sys.argv[1]), float(sys.argv[2]), int(sys.argv[3])).run()      # Instantiate and run a copy of the MMk model.
+    MMk(
+        float(sys.argv[1]), float(sys.argv[2]), int(sys.argv[3])
+    ).run()  # Instantiate and run a copy of the MMk model.
