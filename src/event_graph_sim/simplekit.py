@@ -106,7 +106,7 @@ class SimpleKit:
 __author__ = ["Hayley Oliver", "Paul J Sanchez"]
 __copyright__ = "Copyright 2015-2026, Hayley Oliver and Paul J Sanchez"
 __license__ = "MIT"
-__version__ = "3.3.0"
+__version__ = "3.4.0"
 __maintainer__ = "Paul J Sanchez"
 __email__ = "prof.paul.sanchez@gmail.com"
 __status__ = "Development"
