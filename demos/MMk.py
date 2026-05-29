@@ -1,6 +1,5 @@
 """Demo model of SimpleKit usage."""
 
-import math
 import sys
 
 import numpy

@@ -1,5 +1,3 @@
-import math
-
 import numpy.random as rnd
 
 from event_graph_sim import SimpleKit
