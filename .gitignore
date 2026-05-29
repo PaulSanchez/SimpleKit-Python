@@ -1,1 +1,3 @@
 *.pyc
+/dist/event_graph_sim-3.4.0.tar.gz
+/dist/event_graph_sim-3.4.0-py3-none-any.whl
